@@ -1,63 +1,39 @@
-# version: "3.9"
-# services:
-#   mongo:
-#     image: mongo:7
-#     restart: unless-stopped
-#     ports: ["27017:27017"]
-#     volumes: ["mongo_data:/data/db"]
-#     healthcheck:
-#       test: ["CMD", "mongosh", "--eval", "db.adminCommand('ping')"]
-#       interval: 10s
-#       timeout: 5s
-#       retries: 5
+name: Docker Build & Push
 
-#   server:
-#     build: ./server
-#     restart: unless-stopped
-#     env_file: ./server/.env
-#     environment:
-#       - MONGO_URI=mongodb://mongo:27017/railwaygpt
-#       - CLIENT_URL=http://localhost:8080
-#     depends_on:
-#       mongo:
-#         condition: service_healthy
-#     ports: ["5000:5000"]
-#     volumes:
-#       - ./server/uploads:/app/uploads
-#       - ./server/logs:/app/logs
+on:
+  push:
+    branches:
+      - main
 
-#   client:
-#     build: ./client
-#     restart: unless-stopped
-#     ports: ["8080:80"]
-#     depends_on: [server]
+jobs:
+  docker:
+    runs-on: ubuntu-latest
 
-# volumes:
-#   mongo_data:
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
 
+      - name: Setup Buildx
+        uses: docker/setup-buildx-action@v3
 
-version: "3.9"
+      - name: Login DockerHub
+        uses: docker/login-action@v3
+        with:
+          username: ${{ secrets.DOCKER_USERNAME }}
+          password: ${{ secrets.DOCKER_PASSWORD }}
 
-services:
-  server:
-    build:
-      context: ./server
-    container_name: railwaygpt-backend
-    restart: unless-stopped
-    env_file:
-      - ./server/.env
-    ports:
-      - "5000:5000"
-    volumes:
-      - ./server/uploads:/app/uploads
-      - ./server/logs:/app/logs
+      - name: Build Backend
+        run: |
+          docker build -t vikashsharma0707/railwaygpt-backend:latest ./server
 
-  client:
-    build:
-      context: ./client
-    container_name: railwaygpt-frontend
-    restart: unless-stopped
-    ports:
-      - "8080:80"
-    depends_on:
-      - server
+      - name: Build Frontend
+        run: |
+          docker build -t vikashsharma0707/railwaygpt-frontend:latest ./client
+
+      - name: Push Backend
+        run: |
+          docker push vikashsharma0707/railwaygpt-backend:latest
+
+      - name: Push Frontend
+        run: |
+          docker push vikashsharma0707/railwaygpt-frontend:latest
