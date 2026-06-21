@@ -1,0 +1,32 @@
+apiVersion: v1
+kind: Namespace
+metadata:
+  name: railwaygpt
+---
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: railwaygpt-config
+  namespace: railwaygpt
+data:
+  NODE_ENV: "production"
+  PORT: "5000"
+  CLIENT_URL: "https://railwaygpt.example.com"
+  MONGO_URI: "mongodb://mongo:27017/railwaygpt"
+  OPENROUTER_MODEL: "google/gemini-2.0-flash-exp:free"
+  OPENROUTER_EMBED_MODEL: "openai/text-embedding-3-small"
+  OPENROUTER_BASE_URL: "https://openrouter.ai/api/v1"
+---
+apiVersion: v1
+kind: Secret
+metadata:
+  name: railwaygpt-secrets
+  namespace: railwaygpt
+type: Opaque
+stringData:
+  JWT_ACCESS_SECRET: "change-me"
+  JWT_REFRESH_SECRET: "change-me-too"
+  OPENROUTER_API_KEY: ""
+  RAZORPAY_KEY_ID: ""
+  RAZORPAY_KEY_SECRET: ""
+  RAZORPAY_WEBHOOK_SECRET: ""

@@ -1,0 +1,76 @@
+import { Routes, Route, Navigate } from 'react-router-dom';
+import Layout from './components/layout/Layout.jsx';
+import ProtectedRoute from './components/layout/ProtectedRoute.jsx';
+import Landing from './pages/Landing.jsx';
+import Login from './pages/auth/Login.jsx';
+import Register from './pages/auth/Register.jsx';
+import ForgotPassword from './pages/auth/ForgotPassword.jsx';
+import ResetPassword from './pages/auth/ResetPassword.jsx';
+import Dashboard from './pages/user/Dashboard.jsx';
+import TrainSearch from './pages/user/TrainSearch.jsx';
+import TrainDetails from './pages/user/TrainDetails.jsx';
+import Booking from './pages/user/Booking.jsx';
+import Payment from './pages/user/Payment.jsx';
+import PaymentSuccess from './pages/user/PaymentSuccess.jsx';
+import PaymentFailure from './pages/user/PaymentFailure.jsx';
+import MyTickets from './pages/user/MyTickets.jsx';
+import PNRStatus from './pages/user/PNRStatus.jsx';
+import TripPlanner from './pages/user/TripPlanner.jsx';
+import AIAssistant from './pages/user/AIAssistant.jsx';
+import Profile from './pages/user/Profile.jsx';
+import Notifications from './pages/user/Notifications.jsx';
+import AdminDashboard from './pages/admin/AdminDashboard.jsx';
+import AdminAnalytics from './pages/admin/AdminAnalytics.jsx';
+import AdminTrains from './pages/admin/AdminTrains.jsx';
+import AdminUsers from './pages/admin/AdminUsers.jsx';
+import AdminBookings from './pages/admin/AdminBookings.jsx';
+import AdminKnowledge from './pages/admin/AdminKnowledge.jsx';
+import AdminAgents from './pages/admin/AdminAgents.jsx';
+import NotFound from './pages/NotFound.jsx';
+import Trains from './pages/Trains.jsx';
+
+export default function App() {
+  return (
+    <Routes>
+      <Route element={<Layout />}>
+        <Route index element={<Landing />} />
+        <Route path="login" element={<Login />} />
+        <Route path="register" element={<Register />} />
+        <Route path="forgot-password" element={<ForgotPassword />} />
+        <Route path="reset-password" element={<ResetPassword />} />
+
+        <Route path="trainsSearch" element={<TrainSearch />} />
+        <Route path="trainsSearch/:id" element={<TrainDetails />} />
+        <Route path="pnr" element={<PNRStatus />} />
+        <Route path="assistant" element={<AIAssistant />} />
+
+        <Route path="/trains" element={<Trains/>} />
+<Route path="/admin/trains" element={<Trains isAdmin={true} />} />
+
+        <Route element={<ProtectedRoute />}>
+          <Route path="dashboard" element={<Dashboard />} />
+          <Route path="book/:trainId" element={<Booking />} />
+          <Route path="pay/:bookingId" element={<Payment />} />
+          <Route path="payment/success" element={<PaymentSuccess />} />
+          <Route path="payment/failure" element={<PaymentFailure />} />
+          <Route path="tickets" element={<MyTickets />} />
+          <Route path="trip-planner" element={<TripPlanner />} />
+          <Route path="profile" element={<Profile />} />
+          <Route path="notifications" element={<Notifications />} />
+        </Route>
+
+        <Route element={<ProtectedRoute role="admin" />}>
+          <Route path="admin" element={<AdminDashboard />} />
+          <Route path="admin/analytics" element={<AdminAnalytics />} />
+          <Route path="admin/trains" element={<AdminTrains />} />
+          <Route path="admin/users" element={<AdminUsers />} />
+          <Route path="admin/bookings" element={<AdminBookings />} />
+          <Route path="admin/knowledge" element={<AdminKnowledge />} />
+          <Route path="admin/agents" element={<AdminAgents />} />
+        </Route>
+
+        <Route path="*" element={<NotFound />} />
+      </Route>
+    </Routes>
+  );
+}

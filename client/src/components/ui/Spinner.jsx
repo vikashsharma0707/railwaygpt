@@ -1,0 +1,4 @@
+export default function Spinner({ size = 'md' }) {
+  const cls = size === 'sm' ? 'w-4 h-4 border-2' : 'w-8 h-8 border-[3px]';
+  return <div className={`${cls} animate-spin rounded-full border-brand-500 border-t-transparent inline-block`} />;
+}
