@@ -1,0 +1,62 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: railwaygpt-backend
+  namespace: railwaygpt
+
+spec:
+  replicas: 2
+
+  selector:
+    matchLabels:
+      app: railwaygpt-backend
+
+  template:
+    metadata:
+      labels:
+        app: railwaygpt-backend
+
+    spec:
+      containers:
+        - name: backend
+
+          image: vikashsharma0707/railwaygpt-backend:latest
+
+          imagePullPolicy: Always
+
+          ports:
+            - containerPort: 5000
+
+          env:
+            - name: NODE_ENV
+              value: "production"
+
+            - name: PORT
+              value: "5000"
+
+            - name: MONGO_URI
+              valueFrom:
+                secretKeyRef:
+                  name: railwaygpt-secret
+                  key: mongo-uri
+
+            - name: JWT_ACCESS_SECRET
+              valueFrom:
+                secretKeyRef:
+                  name: railwaygpt-secret
+                  key: jwt-access
+
+            - name: JWT_REFRESH_SECRET
+              valueFrom:
+                secretKeyRef:
+                  name: railwaygpt-secret
+                  key: jwt-refresh
+
+          resources:
+            requests:
+              memory: "256Mi"
+              cpu: "250m"
+
+            limits:
+              memory: "512Mi"
+              cpu: "500m"
