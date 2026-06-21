@@ -58,12 +58,19 @@ const passengerSchema = new mongoose.Schema({
 }, { _id: false });
 
 const bookingSchema = new mongoose.Schema({
+  // pnr: { 
+  //   type: String, 
+  //   unique: true, 
+  //   index: true, 
+  //   required: true 
+  // },
+
   pnr: { 
-    type: String, 
-    unique: true, 
-    index: true, 
-    required: true 
-  },
+  type: String, 
+  required: true, 
+  unique: true 
+  // Remove index: true if present
+},
   
   user: { 
     type: mongoose.Schema.Types.ObjectId, 
