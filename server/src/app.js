@@ -20,7 +20,15 @@ app.use('/api/payments/webhook',
 );
 
 app.use(helmet());
-app.use(cors({ origin: env.CLIENT_URL, credentials: true }));
+// app.use(cors({ origin: env.CLIENT_URL, credentials: true }));
+const corsOpen = {
+  origin: '*',                                   // allow ALL origins
+  methods: ['GET','POST','PUT','PATCH','DELETE','OPTIONS'],
+  allowedHeaders: ['Content-Type','Authorization','X-Requested-With'],
+  exposedHeaders: ['Content-Length','X-Request-Id'],
+  maxAge: 86400,
+  credentials: false,                             // must be false with "*"
+};
 app.use(compression());
 app.use(express.json({ limit: '5mb' }));
 app.use(express.urlencoded({ extended: true }));
