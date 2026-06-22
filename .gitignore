@@ -12,3 +12,10 @@ coverage/
 .idea/
 uploads/
 tmp/
+
+
+
+# Kubernetes Secrets
+k8s/*secret*.yaml
+k8s/secrets.yaml
+k8s/railwaygpt-secret.yaml

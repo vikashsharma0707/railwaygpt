@@ -1,0 +1,27 @@
+apiVersion: apps/v1
+kind: Deployment
+
+metadata:
+  name: railwaygpt-frontend
+  namespace: railwaygpt
+
+spec:
+  replicas: 1
+
+  selector:
+    matchLabels:
+      app: railwaygpt-frontend
+
+  template:
+    metadata:
+      labels:
+        app: railwaygpt-frontend
+
+    spec:
+      containers:
+        - name: frontend
+          image: vikashsharma0707/railwaygpt-frontend:latest
+          imagePullPolicy: Always
+
+          ports:
+            - containerPort: 80
