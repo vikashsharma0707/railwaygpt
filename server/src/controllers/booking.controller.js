@@ -76,17 +76,35 @@ exports.cancel = asyncHandler(async (req, res) => {
   apiResponse(res, booking, 'Booking cancelled successfully');
 });
 
-exports.ticketPDF = asyncHandler(async (req, res) => {
-  const booking = await bookingService.byId(req.params.id);
-  if (!booking) {
-    return apiResponse(res, null, 'Booking not found', 404);
-  }
+// exports.ticketPDF = asyncHandler(async (req, res) => {
+//   const booking = await bookingService.byId(req.params.id);
+//   if (!booking) {
+//     return apiResponse(res, null, 'Booking not found', 404);
+//   }
 
-  const pdf = await ticketService.getPDF(booking);
+//   const pdf = await ticketService.getPDF(booking);
   
-  res.setHeader('Content-Type', 'application/pdf');
-  res.setHeader('Content-Disposition', `attachment; filename=ticket-${booking.pnr}.pdf`);
-  res.end(pdf);
+//   res.setHeader('Content-Type', 'application/pdf');
+//   res.setHeader('Content-Disposition', `attachment; filename=ticket-${booking.pnr}.pdf`);
+//   res.end(pdf);
+// });
+
+exports.ticketPDF = asyncHandler(async (req, res) => {
+  try {
+    const booking = await bookingService.byId(req.params.id);
+    if (!booking) {
+      return apiResponse(res, null, 'Booking not found', 404);
+    }
+
+    const pdfBuffer = await ticketService.getPDF(booking);
+
+    res.setHeader('Content-Type', 'application/pdf');
+    res.setHeader('Content-Disposition', `attachment; filename="ticket-${booking.pnr}.pdf"`);
+    res.end(pdfBuffer);
+  } catch (err) {
+    console.error("PDF Generation Error:", err);
+    return apiResponse(res, null, 'Failed to generate PDF', 500);
+  }
 });
 
 exports.listAll = asyncHandler(async (req, res) => {

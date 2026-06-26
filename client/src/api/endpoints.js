@@ -100,7 +100,12 @@ export const bookingApi = {
   byPNR: (pnr) => api.get(`/bookings/pnr/${pnr}`),
   byId: (id) => api.get(`/bookings/${id}`),
   cancel: (id) => api.post(`/bookings/${id}/cancel`),
-  ticketUrl: (id) => `${api.defaults.baseURL}/bookings/${id}/ticket.pdf`,
+  // ticketUrl: (id) => `${api.defaults.baseURL}/bookings/${id}/ticket.pdf`,
+  ticketUrl: (id) => {
+    const token = localStorage.getItem('access');
+    const baseUrl = `${api.defaults.baseURL}/bookings/${id}/ticket.pdf`;
+    return token ? `${baseUrl}?token=${encodeURIComponent(token)}` : baseUrl;
+  },
   listAll: () => api.get('/bookings'),        // admin use
 };
 
