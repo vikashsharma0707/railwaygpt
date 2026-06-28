@@ -123,6 +123,7 @@
 
 import React, { useState, useEffect } from 'react';
 import AdminTrains from '../../pages/admin/AdminTrains';   // ← Same folder mein hona chahiye
+import AdminKnowledge from '../../pages/admin/AdminKnowledge';
 
 const AdminDashboard = () => {
   const [showTrains, setShowTrains] = useState(false);
@@ -160,7 +161,8 @@ const AdminDashboard = () => {
       {/* Manage Trains Section */}
       {showTrains && (
         <div className="bg-gray-900 border border-gray-700 rounded-3xl overflow-hidden">
-          <AdminTrains />jkhjhhjkhjkh
+          <AdminTrains />
+          <AdminKnowledge/>
         </div>
       )}
     </div>

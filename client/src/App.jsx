@@ -28,6 +28,7 @@ import AdminKnowledge from './pages/admin/AdminKnowledge.jsx';
 import AdminAgents from './pages/admin/AdminAgents.jsx';
 import NotFound from './pages/NotFound.jsx';
 import Trains from './pages/Trains.jsx';
+import AdminLayout from './components/layout/AdminLayout.jsx';
 
 export default function App() {
   return (
@@ -59,7 +60,7 @@ export default function App() {
           <Route path="notifications" element={<Notifications />} />
         </Route>
 
-        <Route element={<ProtectedRoute role="admin" />}>
+        {/* <Route element={<ProtectedRoute role="admin" />}>
           <Route path="admin" element={<AdminDashboard />} />
           <Route path="admin/analytics" element={<AdminAnalytics />} />
           <Route path="admin/trains" element={<AdminTrains />} />
@@ -67,7 +68,23 @@ export default function App() {
           <Route path="admin/bookings" element={<AdminBookings />} />
           <Route path="admin/knowledge" element={<AdminKnowledge />} />
           <Route path="admin/agents" element={<AdminAgents />} />
-        </Route>
+        </Route> */}
+
+
+        {/* Protected Admin Routes */}
+<Route element={<ProtectedRoute role="admin" />}>
+  <Route path="admin" element={<AdminLayout/>}>
+    <Route index element={<AdminDashboard />} />
+    <Route path="analytics" element={<AdminAnalytics />} />
+    <Route path="admintrains" element={<AdminTrains />} />
+    <Route path="users" element={<AdminUsers />} />
+    <Route path="bookings" element={<AdminBookings />} />
+    <Route path="knowledge" element={<AdminKnowledge />} />
+    <Route path="agents" element={<AdminAgents />} />
+    {/* <Route path="activity" element={<ActivityFeed />} />
+    <Route path="quick-actions" element={<QuickActions />} /> */}
+  </Route>
+</Route>
 
         <Route path="*" element={<NotFound />} />
       </Route>

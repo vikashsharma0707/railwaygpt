@@ -9,5 +9,7 @@ r.use('/ai', require('./ai.routes'));
 r.use('/knowledge', require('./knowledge.routes'));
 r.use('/notifications', require('./notification.routes'));
 r.use('/admin', require('./admin.routes'));
+r.use('/knowledge', require('./policy.routes'));
+r.use('/rag',       require('./rag.routes'));
 
 module.exports = r;
