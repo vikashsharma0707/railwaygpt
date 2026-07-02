@@ -450,6 +450,7 @@ import { useAuth } from '../../context/AuthContext.jsx';
 
 // ─── Config ───────────────────────────────────────────────────────────────
 const PUBLIC_LINKS = [
+  { to: '/dashboard', label: 'Home', icon: '✨' },
   { to: '/trains', label: 'Trains', icon: '🚆' },
   { to: '/trainsSearch', label: 'Search', icon: '🔍' },
   { to: '/pnr', label: 'PNR Status', icon: '📋' },

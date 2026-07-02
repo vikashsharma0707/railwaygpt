@@ -200,6 +200,12 @@ export const bookingApi = {
   listAll:  ()     => api.get('/bookings'),
 };
 
+export const tatkalApi = {
+  availability: (params) => api.get('/tatkal/availability', { params }),
+  windowStatus: (params) => api.get('/tatkal/window-status', { params }),
+  book:         (data)   => api.post('/tatkal/book', data),
+};
+
 export const paymentApi = {
   order:  (bookingId) => api.post('/payments/order', { bookingId }),
   verify: (data)      => api.post('/payments/verify', data),
